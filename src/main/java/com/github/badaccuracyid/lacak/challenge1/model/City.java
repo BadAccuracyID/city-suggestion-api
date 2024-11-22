@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(
         name = "cities",
         indexes = {
-                @Index(name = "name_index", columnList = "name", unique = true),
+                @Index(name = "name_index", columnList = "name"),
                 @Index(name = "latitude_index", columnList = "latitude"),
                 @Index(name = "longitude_index", columnList = "longitude")
         }
