@@ -1,6 +1,7 @@
 package com.github.badaccuracyid.lacak.challenge1.service;
 
-import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionDTO;
+import com.github.badaccuracyid.lacak.challenge1.dto.Suggestion;
+import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,10 @@ public class SuggestionService {
         this.cityService = cityService;
     }
 
-    public List<SuggestionDTO> getSuggestions(String query, Double latitude, Double longitude) {
+    public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) {
         List<City> cities = cityService.findByNameContainingIgnoreCase(query);
-        return cities.stream()
-                .map(city -> new SuggestionDTO(
+        List<Suggestion> suggestions = cities.stream()
+                .map(city -> new Suggestion(
                         city.getName(),
                         city.getLatitude(),
                         city.getLongitude(),
@@ -26,8 +27,9 @@ public class SuggestionService {
                 ))
                 .sorted((s1, s2) -> Double.compare(s2.score(), s1.score()))
                 .toList();
-    }
 
+        return new SuggestionResponse(suggestions);
+    }
 
     private double calculateScore(City city, Double latitude, Double longitude) {
         double score = 1.0;
