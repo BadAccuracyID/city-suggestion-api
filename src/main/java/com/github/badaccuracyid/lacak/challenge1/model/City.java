@@ -31,11 +31,11 @@ public class City {
     private String name;
 
     @JsonProperty("latitude")
-    @Column(name = "latitude", nullable = false)
+    @Column(name = "latitude", nullable = false, columnDefinition = "DOUBLE PRECISION")
     private double latitude;
 
     @JsonProperty("longitude")
-    @Column(name = "longitude", nullable = false)
+    @Column(name = "longitude", nullable = false, columnDefinition = "DOUBLE PRECISION")
     private double longitude;
 
 }
