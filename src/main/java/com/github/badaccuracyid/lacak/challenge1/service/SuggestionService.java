@@ -3,6 +3,8 @@ package com.github.badaccuracyid.lacak.challenge1.service;
 import com.github.badaccuracyid.lacak.challenge1.dto.Suggestion;
 import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 @Service
 public class SuggestionService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SuggestionService.class);
     private final CityService cityService;
 
     public SuggestionService(CityService cityService) {
@@ -17,6 +20,8 @@ public class SuggestionService {
     }
 
     public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) {
+        logger.info("Fetching suggestions for query: {}, latitude: {}, longitude: {}", query, latitude, longitude);
+
         List<City> cities = cityService.findByNameContainingIgnoreCase(query);
         List<Suggestion> suggestions = cities.stream()
                 .map(city -> new Suggestion(
