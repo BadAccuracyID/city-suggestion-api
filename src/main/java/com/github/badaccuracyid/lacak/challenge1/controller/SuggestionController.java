@@ -19,10 +19,10 @@ public class SuggestionController {
 
     @GetMapping("/suggestions")
     public List<SuggestionDTO> suggestions(
-            @RequestParam String query,
+            @RequestParam String q,
             @RequestParam(required = false) Double latitude,
             @RequestParam(required = false) Double longitude
     ) {
-        return suggestionService.getSuggestions(query, latitude, longitude);
+        return suggestionService.getSuggestions(q, latitude, longitude);
     }
 }
