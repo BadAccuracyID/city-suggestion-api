@@ -2,6 +2,7 @@ package com.github.badaccuracyid.lacak.challenge1.service;
 
 import com.github.badaccuracyid.lacak.challenge1.model.City;
 import com.github.badaccuracyid.lacak.challenge1.repository.CityRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class CityService {
         this.cityRepository = cityRepository;
     }
 
+    @Cacheable("cities")
     public List<City> findByNameContainingIgnoreCase(String query) {
         return cityRepository.findByNameContainingIgnoreCase(query);
     }
