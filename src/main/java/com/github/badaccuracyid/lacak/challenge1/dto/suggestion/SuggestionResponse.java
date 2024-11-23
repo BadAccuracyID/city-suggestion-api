@@ -1,4 +1,4 @@
-package com.github.badaccuracyid.lacak.challenge1.dto;
+package com.github.badaccuracyid.lacak.challenge1.dto.suggestion;
 
 import java.util.List;
 

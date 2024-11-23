@@ -1,7 +1,7 @@
 package com.github.badaccuracyid.lacak.challenge1.service.suggestion;
 
-import com.github.badaccuracyid.lacak.challenge1.dto.Suggestion;
-import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
+import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.Suggestion;
+import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
 import com.github.badaccuracyid.lacak.challenge1.service.city.CityServiceImpl;
 import org.slf4j.Logger;
@@ -32,8 +32,10 @@ public class SuggestionServiceImpl implements SuggestionService {
      */
     @Override
     @Cacheable("suggestions")
-    public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) {
+    public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) throws IllegalArgumentException {
         logger.info("Fetching suggestions for query: {}, latitude: {}, longitude: {}", query, latitude, longitude);
+
+        validateInputs(query, latitude, longitude);
 
         List<City> cities = cityServiceImpl.findByNameContainingIgnoreCase(query);
         List<Suggestion> suggestions = cities.stream()
@@ -48,6 +50,27 @@ public class SuggestionServiceImpl implements SuggestionService {
                 .toList();
 
         return new SuggestionResponse(suggestions);
+    }
+
+    /**
+     * Validate the input parameters for the suggestion service
+     *
+     * @param query     The query string to search for city names
+     * @param latitude  The latitude of the location
+     * @param longitude The longitude of the location
+     */
+    private void validateInputs(String query, Double latitude, Double longitude) {
+        if (query == null || query.trim().isEmpty()) {
+            throw new IllegalArgumentException("Query parameter cannot be null or empty.");
+        }
+
+        if (latitude != null && (latitude < -90 || latitude > 90)) {
+            throw new IllegalArgumentException("Latitude must be between -90 and 90.");
+        }
+
+        if (longitude != null && (longitude < -180 || longitude > 180)) {
+            throw new IllegalArgumentException("Longitude must be between -180 and 180.");
+        }
     }
 
     /**

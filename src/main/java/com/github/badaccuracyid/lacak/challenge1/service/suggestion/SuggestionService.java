@@ -1,6 +1,6 @@
 package com.github.badaccuracyid.lacak.challenge1.service.suggestion;
 
-import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
+import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.SuggestionResponse;
 
 public interface SuggestionService {
 
