@@ -3,6 +3,7 @@ package com.github.badaccuracyid.lacak.challenge1.service.suggestion;
 import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.Suggestion;
 import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
+import com.github.badaccuracyid.lacak.challenge1.properties.SuggestionScoringProperties;
 import com.github.badaccuracyid.lacak.challenge1.service.city.CityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     private static final Logger logger = LoggerFactory.getLogger(SuggestionServiceImpl.class);
     private final CityServiceImpl cityServiceImpl;
+    private final SuggestionScoringProperties scoringProperties;
 
-    public SuggestionServiceImpl(CityServiceImpl cityServiceImpl) {
+    public SuggestionServiceImpl(CityServiceImpl cityServiceImpl, SuggestionScoringProperties scoringProperties) {
         this.cityServiceImpl = cityServiceImpl;
+        this.scoringProperties = scoringProperties;
     }
 
     /**
@@ -86,8 +89,8 @@ public class SuggestionServiceImpl implements SuggestionService {
         double nameScore = calculateScoreName(city, query);
         double locationScore = calculateScoreLocation(city, latitude, longitude);
 
-        double nameWeight = 0.7;
-        double locationWeight = 0.3;
+        double nameWeight = scoringProperties.getNameWeight();
+        double locationWeight = scoringProperties.getLocationWeight();
 
         double combinedScore = (nameScore * nameWeight) + (locationScore * locationWeight);
 
