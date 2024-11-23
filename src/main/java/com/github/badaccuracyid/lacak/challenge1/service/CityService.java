@@ -16,6 +16,12 @@ public class CityService {
         this.cityRepository = cityRepository;
     }
 
+    /**
+     * Find cities by name containing the query
+     *
+     * @param query The query string to search for city names
+     * @return The list of {@link City} containing the query
+     */
     @Cacheable("cities")
     public List<City> findByNameContainingIgnoreCase(String query) {
         return cityRepository.findByNameContainingIgnoreCase(query);
