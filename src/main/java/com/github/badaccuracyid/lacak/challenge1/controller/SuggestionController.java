@@ -1,13 +1,12 @@
 package com.github.badaccuracyid.lacak.challenge1.controller;
 
-import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
+import com.github.badaccuracyid.lacak.challenge1.dto.suggestion.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionService;
 import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,12 +43,8 @@ public class SuggestionController {
             @RequestParam(required = false) Double latitude,
             @RequestParam(required = false) Double longitude
     ) {
-        try {
-            SuggestionResponse response = suggestionService.getSuggestions(q, latitude, longitude);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        SuggestionResponse response = suggestionService.getSuggestions(q, latitude, longitude);
+        return ResponseEntity.ok(response);
     }
 
 }
