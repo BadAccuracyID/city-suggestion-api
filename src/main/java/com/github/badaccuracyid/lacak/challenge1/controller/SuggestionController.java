@@ -1,7 +1,8 @@
 package com.github.badaccuracyid.lacak.challenge1.controller;
 
 import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
-import com.github.badaccuracyid.lacak.challenge1.service.SuggestionService;
+import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionService;
+import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,8 +20,8 @@ public class SuggestionController {
 
     private final SuggestionService suggestionService;
 
-    public SuggestionController(SuggestionService suggestionService) {
-        this.suggestionService = suggestionService;
+    public SuggestionController(SuggestionServiceImpl suggestionServiceImpl) {
+        this.suggestionService = suggestionServiceImpl;
     }
 
     @Operation(

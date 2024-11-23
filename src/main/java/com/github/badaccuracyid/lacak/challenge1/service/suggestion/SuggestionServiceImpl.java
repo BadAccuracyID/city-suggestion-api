@@ -1,8 +1,9 @@
-package com.github.badaccuracyid.lacak.challenge1.service;
+package com.github.badaccuracyid.lacak.challenge1.service.suggestion;
 
 import com.github.badaccuracyid.lacak.challenge1.dto.Suggestion;
 import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
+import com.github.badaccuracyid.lacak.challenge1.service.city.CityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,13 +13,13 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class SuggestionService {
+public class SuggestionServiceImpl implements SuggestionService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SuggestionService.class);
-    private final CityService cityService;
+    private static final Logger logger = LoggerFactory.getLogger(SuggestionServiceImpl.class);
+    private final CityServiceImpl cityServiceImpl;
 
-    public SuggestionService(CityService cityService) {
-        this.cityService = cityService;
+    public SuggestionServiceImpl(CityServiceImpl cityServiceImpl) {
+        this.cityServiceImpl = cityServiceImpl;
     }
 
     /**
@@ -29,11 +30,12 @@ public class SuggestionService {
      * @param longitude The longitude of the location
      * @return The {@link SuggestionResponse} containing the suggestions
      */
+    @Override
     @Cacheable("suggestions")
     public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) {
         logger.info("Fetching suggestions for query: {}, latitude: {}, longitude: {}", query, latitude, longitude);
 
-        List<City> cities = cityService.findByNameContainingIgnoreCase(query);
+        List<City> cities = cityServiceImpl.findByNameContainingIgnoreCase(query);
         List<Suggestion> suggestions = cities.stream()
                 .map(city -> new Suggestion(
                         city.getName(),
