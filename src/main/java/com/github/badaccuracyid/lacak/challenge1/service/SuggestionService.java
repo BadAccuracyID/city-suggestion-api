@@ -5,6 +5,7 @@ import com.github.badaccuracyid.lacak.challenge1.dto.SuggestionResponse;
 import com.github.badaccuracyid.lacak.challenge1.model.City;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -20,6 +21,7 @@ public class SuggestionService {
         this.cityService = cityService;
     }
 
+    @Cacheable("suggestions")
     public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) {
         logger.info("Fetching suggestions for query: {}, latitude: {}, longitude: {}", query, latitude, longitude);
 
