@@ -105,16 +105,17 @@ public class SuggestionServiceImpl implements SuggestionService {
      * @return The score for the city name
      */
     private double calculateScoreName(City city, String query) {
-        double score;
+        String cityName = city.getName();
 
-        if (city.getName().equalsIgnoreCase(query)) {
-            score = 1.0;
-        } else {
-            double distance = levenshteinDistance(city.getName(), query);
-            score = 1.0 / (1 + distance);
+        double levenshteinDistance = levenshteinDistance(query.toLowerCase(), cityName.toLowerCase());
+        double normalizedDistance = 1.0 - (levenshteinDistance / Math.max(query.length(), cityName.length()));
+
+        double prefixBonus = 0.3;
+        if (cityName.toLowerCase().startsWith(query.toLowerCase())) {
+            normalizedDistance += prefixBonus;
         }
 
-        return score;
+        return Math.min(1.0, Math.max(0.0, normalizedDistance));
     }
 
     /**
