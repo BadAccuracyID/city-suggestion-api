@@ -58,7 +58,7 @@ public class SuggestionService {
         if (city.getName().equalsIgnoreCase(query)) {
             score = 1.0;
         } else {
-            double distance = levenshteinDistance(city.getName().toLowerCase(), query.toLowerCase());
+            double distance = levenshteinDistance(city.getName(), query);
             score = 1.0 / (1 + distance);
         }
 
