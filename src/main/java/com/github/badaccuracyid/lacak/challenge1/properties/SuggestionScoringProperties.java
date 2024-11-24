@@ -12,4 +12,7 @@ public class SuggestionScoringProperties {
     private double nameWeight;
     private double locationWeight;
 
+    private boolean usePopulation;
+    private double populationWeight;
+
 }

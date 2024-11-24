@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(
@@ -37,5 +39,9 @@ public class City {
     @JsonProperty("longitude")
     @Column(name = "longitude", nullable = false, columnDefinition = "DOUBLE PRECISION")
     private double longitude;
+
+    @JsonProperty
+    @Column(name = "population", nullable = false, columnDefinition = "BIGINT")
+    private BigInteger population;
 
 }

@@ -92,8 +92,17 @@ public class SuggestionServiceImpl implements SuggestionService {
         double nameWeight = scoringProperties.getNameWeight();
         double locationWeight = scoringProperties.getLocationWeight();
 
-        double combinedScore = (nameScore * nameWeight) + (locationScore * locationWeight);
+        if (!scoringProperties.isUsePopulation()) {
+            double combinedScore = (nameScore * nameWeight) + (locationScore * locationWeight);
+            return Math.min(1.0, Math.max(0.0, combinedScore));
+        }
 
+        double populationScore = calculateScorePopulation(city);
+        double populationWeight = scoringProperties.getPopulationWeight();
+
+        double combinedScore = (nameScore * nameWeight) +
+                (locationScore * locationWeight) +
+                (populationScore * populationWeight);
         return Math.min(1.0, Math.max(0.0, combinedScore));
     }
 
@@ -193,5 +202,18 @@ public class SuggestionServiceImpl implements SuggestionService {
                 * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
+    }
+
+    /**
+     * Calculate the score for the city population
+     *
+     * @param city The {@link City} to calculate the score for
+     * @return The score for the city population
+     */
+    private double calculateScorePopulation(City city) {
+        final int MAX_POPULATION = 10_000_000;
+
+        double normalizedPopulation = city.getPopulation().doubleValue() / MAX_POPULATION;
+        return Math.min(1.0, normalizedPopulation);
     }
 }
