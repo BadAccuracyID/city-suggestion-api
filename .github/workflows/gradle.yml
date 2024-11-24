@@ -31,7 +31,7 @@ jobs:
       with:
         java-version: '21'
         distribution: 'zulu'
-    
+
     - name: Create .env file
       run: |
         echo "DB_URL=${{ secrets.DATASOURCE_PASSWORD }}" >> ./src/main/resources/.env
@@ -48,6 +48,13 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
+
+    - name: Run one test
+      run: ./gradlew test --tests "*SuggestionServiceInputTest"
+      env:
+        DATASOURCE_PASSWORD: postgres
+        DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres
+        DATASOURCE_USERNAME: postgres
 
     - name: Build with Gradle Wrapper
       run: ./gradlew clean build --no-daemon
