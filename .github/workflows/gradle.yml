@@ -41,9 +41,9 @@ jobs:
 
     - name: Create .env file
       run: |
-        echo "DB_URL=${{ secrets.TEST_DATASOURCE_PASSWORD }}" >> ./src/main/resources/.env
-        echo "DB_USER=${{ secrets.TEST_DATASOURCE_URL }}" >> ./src/main/resources/.env
-        echo "DB_PASSWORD=${{ secrets.TEST_DATASOURCE_USERNAME }}" >> ./src/main/resources/.env
+        echo "DB_URL=${{ secrets.DATASOURCE_PASSWORD }}" >> ./src/main/resources/.env
+        echo "DB_USER=${{ secrets.DATASOURCE_URL }}" >> ./src/main/resources/.env
+        echo "DB_PASSWORD=${{ secrets.DATASOURCE_USERNAME }}" >> ./src/main/resources/.env
 
     - name: Grant execute permission for Gradlew
       run: chmod +x gradlew
@@ -55,6 +55,13 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
+
+    - name: Run one test
+      run: ./gradlew test --tests "*SuggestionServiceInputTest"
+      env:
+        DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres
+        DATASOURCE_PASSWORD: postgres
+        DATASOURCE_USERNAME: postgres
 
     - name: Build with Gradle Wrapper
       run: ./gradlew clean build --no-daemon
