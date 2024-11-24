@@ -15,8 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = {SuggestionServiceInputTest.class, CityServiceImpl.class, SuggestionService.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = LacakCodingChallenge1Application.class)
 public class SuggestionServiceInputTest {
 
     @MockitoBean
