@@ -41,9 +41,9 @@ jobs:
 
     - name: Create .env file
       run: |
-        echo "DB_URL=${{ secrets.TEST_DATASOURCE_PASSWORD }}" >> ./src/main/resources/.env
-        echo "DB_USER=${{ secrets.TEST_DATASOURCE_URL }}" >> ./src/main/resources/.env
-        echo "DB_PASSWORD=${{ secrets.TEST_DATASOURCE_USERNAME }}" >> ./src/main/resources/.env
+        echo "TEST_DATASOURCE_PASSWORD=${{ secrets.TEST_DATASOURCE_PASSWORD }}" >> ./src/main/resources/.env
+        echo "TEST_DATASOURCE_URL=${{ secrets.TEST_DATASOURCE_URL }}" >> ./src/main/resources/.env
+        echo "TEST_DATASOURCE_USERNAME=${{ secrets.TEST_DATASOURCE_USERNAME }}" >> ./src/main/resources/.env
 
     - name: Grant execute permission for Gradlew
       run: chmod +x gradlew
