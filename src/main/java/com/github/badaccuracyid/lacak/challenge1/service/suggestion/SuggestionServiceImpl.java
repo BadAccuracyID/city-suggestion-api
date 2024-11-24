@@ -110,7 +110,8 @@ public class SuggestionServiceImpl implements SuggestionService {
         double levenshteinDistance = levenshteinDistance(query.toLowerCase(), cityName.toLowerCase());
         double normalizedDistance = 1.0 - (levenshteinDistance / Math.max(query.length(), cityName.length()));
 
-        double prefixBonus = 0.3;
+        // Dynamic prefix bonus based on the length of the query
+        double prefixBonus = 0.3 + (0.1 * Math.min(query.length() / 10.0, 1.0));
         if (cityName.toLowerCase().startsWith(query.toLowerCase())) {
             normalizedDistance += prefixBonus;
         }
