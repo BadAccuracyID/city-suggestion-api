@@ -7,6 +7,7 @@ import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionSe
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigInteger;
@@ -15,7 +16,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = LacakCodingChallenge1Application.class)
+@SpringBootTest
+@ActiveProfiles("test")
 public class SuggestionServiceInputTest {
 
     @MockitoBean
