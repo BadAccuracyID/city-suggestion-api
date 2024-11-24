@@ -6,6 +6,7 @@ import com.github.badaccuracyid.lacak.challenge1.service.suggestion.SuggestionSe
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +33,24 @@ public class SuggestionController {
                     @Parameter(name = "longitude", description = "Longitude of the location")
             },
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json")),
-                    @ApiResponse(responseCode = "400", description = "Invalid input parameters", content = @Content(mediaType = "application/json")),
-                    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuggestionResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid input parameters",
+                            content = @Content(mediaType = "application/json")
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content(mediaType = "application/json")
+                    )
             }
     )
     @GetMapping("/suggestions")
