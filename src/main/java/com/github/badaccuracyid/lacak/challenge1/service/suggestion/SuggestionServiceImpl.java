@@ -34,7 +34,7 @@ public class SuggestionServiceImpl implements SuggestionService {
      * @return The {@link SuggestionResponse} containing the suggestions
      */
     @Override
-    @Cacheable("suggestions")
+    @Cacheable(value = "suggestions", key = "#query + '-' + #latitude + '-' + #longitude")
     public SuggestionResponse getSuggestions(String query, Double latitude, Double longitude) throws IllegalArgumentException {
         logger.info("Fetching suggestions for query: {}, latitude: {}, longitude: {}", query, latitude, longitude);
 
